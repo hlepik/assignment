@@ -1,0 +1,28 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+    <link th:href="@{/assets/style/style.css}" th:rel="stylesheet" />
+</head>
+<header id="headerId" >
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    >
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class='links' th:href="@{/}">Esileht</a>
+                        <a class='links' th:href="@{registered}">Broneeringud</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<body>
+<div class="container" id="centered">
+    <div class="text-output" th:text="#{registration.ok}">registration.ok</div>
+</div>
+</body>
+</html>

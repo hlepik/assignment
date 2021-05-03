@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <link th:rel="stylesheet" th:href="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:href="@{/assets/style/style.css}" th:rel="stylesheet" />
+</head>
+
+<body>
+<header id="headerId" >
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    >
+        <div class="container">
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item" >
+                        <a class="links" th:href="@{registered}">Broneeringud</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="container">
+
+    <div th:if="${error}">
+        <div class="alert alert-danger" role="alert"  th:value="${error}" th:text="${error}"></div>
+    </div>
+    <form action="#" th:action="@{/}" th:object="${dentistVisitDTO}" method="post">
+        <div th:if="${#fields.hasErrors('dentistName')}">
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('dentistName')}" th:errors="*{dentistName}">name.error</div>
+        </div>
+        <div th:if="${#fields.hasErrors('visitTime')}">
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('visitTime')}" th:errors="*{visitTime}">date.error</div>
+        </div>
+    <div class="input-group mb-3" id="searchInput" >
+        <td>
+            <tr>
+                <input id="filter" th:field="*{searchValue}" type="text" th:placeholder="Otsing" class="form-control"/>
+                <input type="hidden"/>
+                <span class="right">
+                    <button class="btn btn-outline-info" type="submit" >Otsi</button>
+                </span>
+            </tr>
+        </td>
+    </div>
+
+        <h4>Broneerimiseks täida väljad</h4>
+        <table >
+
+            <p class="titles" th:text="#{dentist.name}">dentist.name</p>
+
+            <select class="form-select"  th:field="*{dentistName}">
+                <option id="selectList" value="">---Vali arst---</option>
+                <option th:each="dentist : ${dentists}" th:value="${dentist.name}" th:text="${dentist.name}"></option>
+            </select>
+
+
+            <div class="dateInput">
+                <label class="titles" for="date">Vali kuupäev</label>
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"
+                           th:value="${visitTime}" th:field="*{visitTime}" id="date" placeholder="Kuupäev"/>
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <tr>
+                <td id="submitButton">
+                    <button class="btn btn-outline-primary" type="submit" th:text="#{register.visit}"></button>
+                </td>
+            </tr>
+    </table>
+
+</form>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/moment/moment.min.js}"></script>
+<script th:src="@{/assets/moment/et.js}"></script>
+
+<script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+
+<script >
+
+
+    $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check-o',
+            clear: 'far fa-trash',
+            close: 'far fa-times',
+
+        } });
+
+
+    $('#datetimepicker1').datetimepicker({
+        format: 'DD.MM.YYYY HH:mm',
+        pickSeconds: false,
+        minDate: new Date().setHours(0,0,0,0),
+        enabledHours:[8,9,10,11,12,13,14,15,16,17],
+        stepping: 30,
+        daysOfWeekDisabled: [0,6],
+        locale: 'et',
+        language: 'et'
+
+    });
+
+</script>
+</body>
+</html>

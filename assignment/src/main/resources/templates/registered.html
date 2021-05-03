@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+  <link th:href="@{/assets/style/style.css}" th:rel="stylesheet" />
+</head>
+<header id="headerId" >
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+  >
+    <div class="container">
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+            <a class='links' th:href="@{/}">Esileht</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col" th:text="#{dentist.name}">dentist.name</th>
+      <th scope="col" th:text="#{visit.date}">visit.date</th>
+    </tr>
+    </thead>
+    <tbody >
+    <div th:each="dentisVisit : ${visits}">
+      <tr>
+        <td th:value="${dentisVisit.dentistName}" th:text="${dentisVisit.dentistName}"></td>
+        <td th:value="${dentisVisit.visitTime}" th:text="${#dates.format(dentisVisit.visitTime, 'dd.MM.yyyy HH.mm')}"></td>
+        <td>
+          <a th:href="@{/edit/{id}(id=${dentisVisit.id})}" class="btn btn-outline-info">Muuda</a>
+          <a th:href="@{/delete/{id}(id=${dentisVisit.id})}" class="btn btn-outline-danger">Kustuta</a>
+        </td>
+      </tr>
+
+    </div>
+    </tbody>
+  </table>
+</div>
+</html>
